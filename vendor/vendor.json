@@ -1,0 +1,49 @@
+{
+	"comment": "",
+	"ignore": "test",
+	"package": [
+		{
+			"checksumSHA1": "6X3O3mfvOyiwV2iAb5GjxARs08c=",
+			"path": "github.com/garyburd/redigo/internal",
+			"revision": "95d11dba2d44531bdb8022752b98912baafae03a",
+			"revisionTime": "2017-05-31T16:47:38Z"
+		},
+		{
+			"checksumSHA1": "+YBVO6LI+Rblq8aBd/TSyuqXAkw=",
+			"path": "github.com/garyburd/redigo/redis",
+			"revision": "95d11dba2d44531bdb8022752b98912baafae03a",
+			"revisionTime": "2017-05-31T16:47:38Z"
+		},
+		{
+			"checksumSHA1": "Y+HGqEkYM15ir+J93MEaHdyFy0c=",
+			"path": "golang.org/x/net/context",
+			"revision": "054b33e6527139ad5b1ec2f6232c3b175bd9a30c",
+			"revisionTime": "2017-07-05T22:25:54Z"
+		},
+		{
+			"checksumSHA1": "WHc3uByvGaMcnSoI21fhzYgbOgg=",
+			"path": "golang.org/x/net/context/ctxhttp",
+			"revision": "054b33e6527139ad5b1ec2f6232c3b175bd9a30c",
+			"revisionTime": "2017-07-05T22:25:54Z"
+		},
+		{
+			"checksumSHA1": "zoNLwFuvZ5OPzUu1FwDApA/hesw=",
+			"path": "gopkg.in/olivere/elastic.v3",
+			"revision": "5a75b7d18bca7420e68338600e8c9f611435f911",
+			"revisionTime": "2017-06-16T12:19:52Z"
+		},
+		{
+			"checksumSHA1": "lLdKOn9RPtFoTtPUNq5+sIInAiE=",
+			"path": "gopkg.in/olivere/elastic.v3/backoff",
+			"revision": "5a75b7d18bca7420e68338600e8c9f611435f911",
+			"revisionTime": "2017-06-16T12:19:52Z"
+		},
+		{
+			"checksumSHA1": "XQg6xG6l15Ke43KolthYYnVDCYo=",
+			"path": "gopkg.in/olivere/elastic.v3/uritemplates",
+			"revision": "5a75b7d18bca7420e68338600e8c9f611435f911",
+			"revisionTime": "2017-06-16T12:19:52Z"
+		}
+	],
+	"rootPath": "github.com/markbest/go-utils"
+}
