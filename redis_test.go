@@ -1,13 +1,11 @@
 package utils
 
-import (
-	"testing"
-)
+import "testing"
 
 var (
-	redis_host = "127.0.0.1"
-	redis_port = "6379"
-	redis_db = 1
+	redis_host     = "127.0.0.1"
+	redis_port     = "6379"
+	redis_db       = 1
 	redis_password = ""
 )
 
@@ -37,7 +35,7 @@ func TestCacheRedis_Get(t *testing.T) {
 }
 
 func TestCacheRedis_HSet(t *testing.T) {
-	art := &Article{"Example", "Gary", "Hello World!"}
+	art := Article{"Example", "Gary", "Hello World!"}
 	redis := NewRedis(redis_host, redis_port, redis_db, redis_password)
 	if err := redis.HSet("article:1", &art, 0); err != nil {
 		t.Error(err)

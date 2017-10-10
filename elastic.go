@@ -1,6 +1,7 @@
 package utils
 
 import (
+	"errors"
 	"gopkg.in/olivere/elastic.v3"
 	"log"
 )
@@ -158,36 +159,38 @@ func (e *ES) OrderBy(field string, order string) *ES {
 }
 
 //ES Create Index
-func (e *ES) CreateIndex(index string) {
+func (e *ES) CreateIndex(index string) (err error) {
 	exists, err := e.ES_Client.IndexExists(index).Do()
 	if err != nil {
-		panic(err)
+		return err
 	}
 	if !exists {
 		createIndex, err := e.ES_Client.CreateIndex(index).Do()
 		if err != nil {
-			panic(err)
+			return err
 		}
 		if !createIndex.Acknowledged {
-			panic("create index failed!")
+			return errors.New("create index failed")
 		}
 	}
+	return nil
 }
 
 //ES Delete Index
-func (e *ES) DeleteIndex(index string) {
+func (e *ES) DeleteIndex(index string) (err error) {
 	exists, err := e.ES_Client.IndexExists(index).Do()
 	if err != nil {
-		panic(err)
+		return err
 	}
 	if exists {
 		_, err = e.ES_Client.DeleteIndex(index).Do()
 		if err != nil {
-			panic(err)
+			return err
 		}
 	} else {
-		panic("index: " + index + " not exist.")
+		return errors.New("index: " + index + " not exist")
 	}
+	return nil
 }
 
 //ES Get Response
@@ -219,7 +222,7 @@ func (e *ES) Search() (ESResponse, error) {
 	// Execute query
 	sr, err := search.Do()
 	if err != nil {
-		panic(err)
+		return nil, err
 	}
 
 	// Decode response
@@ -233,7 +236,7 @@ func (e *ES) Search() (ESResponse, error) {
 	return resp, nil
 }
 
-// DecodeLogs takes a search result and deserializes the response.
+//DecodeLogs takes a search result and deserializes the response.
 func (e *ES) decodeResponse(res *elastic.SearchResult) ([]interface{}, elastic.Aggregations, error) {
 	if res == nil || res.TotalHits() == 0 {
 		return nil, nil, nil
