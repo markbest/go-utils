@@ -22,7 +22,7 @@ type ES struct {
 // FinderResponse is the outcome of calling Finder.Find.
 type ESResponse struct {
 	Total  int64
-	Result []*[]byte
+	Result []*string
 	Aggs   elastic.Aggregations
 }
 
@@ -237,15 +237,16 @@ func (e *ES) Search() (ESResponse, error) {
 }
 
 //DecodeLogs takes a search result and deserializes the response.
-func (e *ES) decodeResponse(res *elastic.SearchResult) ([]*[]byte, elastic.Aggregations, error) {
+func (e *ES) decodeResponse(res *elastic.SearchResult) ([]*string, elastic.Aggregations, error) {
 	if res == nil || res.TotalHits() == 0 {
 		return nil, nil, nil
 	}
 
-	var rss []*[]byte
+	var rss []*string
 	for _, hit := range res.Hits.Hits {
 		tmp,_ := hit.Source.MarshalJSON()
-		rss = append(rss, &tmp)
+		tmps := string(tmp)
+		rss = append(rss, &tmps)
 	}
 	return rss, res.Aggregations, nil
 }
