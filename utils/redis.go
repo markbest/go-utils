@@ -10,9 +10,7 @@ type cacheRedis struct {
 
 //New redis conn
 func NewRedis(host string, port string, db int, password string) *cacheRedis {
-	c, err := redis.Dial("tcp", host+":"+port)
-	c.Do("SELECT", db)
-	c.Do("AUTH", password)
+	c, err := redis.Dial("tcp", host+":"+port, redis.DialDatabase(db), redis.DialPassword(password))
 	if err != nil {
 		panic(err)
 	}
