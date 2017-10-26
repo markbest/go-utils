@@ -8,9 +8,10 @@ var (
 	mongodb_host     = "127.0.0.1"
 	mongodb_port     = "27017"
 	mongodb_source   = "admin"
-	mongodb_username      = ""
+	mongodb_username = ""
 	mongodb_password = ""
 )
+
 type Book struct {
 	Title  string
 	Img    string
