@@ -63,13 +63,15 @@ func (m *Mongodb) Limit(size int) *Mongodb {
 }
 
 //Execute query and get all result
-func (m *Mongodb) All(result interface{}) {
-	m.query.All(result)
+func (m *Mongodb) All(result interface{}) (err error) {
+	err = m.query.All(result)
+	return err
 }
 
 //Execute query and get one result
-func (m *Mongodb) One(result interface{}) {
-	m.query.One(result)
+func (m *Mongodb) One(result interface{}) (err error) {
+	err = m.query.One(result)
+	return err
 }
 
 //Close Mongodb
