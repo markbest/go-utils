@@ -50,6 +50,24 @@ func (m *Mongodb) AllCollections() (names []string) {
 	return names
 }
 
+//Insert data
+func (m *Mongodb) Insert(content interface{}) (err error) {
+	err = m.collection.Insert(content)
+	return err
+}
+
+//Update data
+func (m *Mongodb) Update(condition interface{}, update interface{}) (err error) {
+	err = m.collection.Update(condition, update)
+	return err
+}
+
+//Remove data
+func (m *Mongodb) Remove(condition interface{}) (err error) {
+	err = m.collection.Remove(condition)
+	return err
+}
+
 //Where condition
 func (m *Mongodb) Where(condition interface{}) *Mongodb {
 	m.query = m.collection.Find(condition)
