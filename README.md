@@ -11,4 +11,6 @@ go test -v redis_test.go redis.go
 - zookeeper  
 go test -v zookeeper_test.go zookeeper.go  
 - etcd  
-go test -v etcd_test.go etcd.go
+go test -v etcd_test.go etcd.go  
+- ssh  
+go test -v ssh_test.go ssh.go
