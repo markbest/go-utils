@@ -3,11 +3,11 @@ package utils
 import "testing"
 
 var (
-	etcd_servers = []string{"127.0.0.1:2379"}
+	etcdServers = []string{"127.0.0.1:2379"}
 )
 
 func TestEtcd_Put(t *testing.T) {
-	client := NewEtcdConn(etcd_servers)
+	client := NewEtcdConn(etcdServers)
 	defer client.Close()
 
 	if err := client.Put("/test/1", "test1"); err != nil {
@@ -20,7 +20,7 @@ func TestEtcd_Put(t *testing.T) {
 }
 
 func TestEtcd_Get(t *testing.T) {
-	client := NewEtcdConn(etcd_servers)
+	client := NewEtcdConn(etcdServers)
 	defer client.Close()
 
 	if value, err := client.Get("/test/1"); err != nil {
@@ -31,7 +31,7 @@ func TestEtcd_Get(t *testing.T) {
 }
 
 func TestEtcd_GetKeysByPrefix(t *testing.T) {
-	client := NewEtcdConn(etcd_servers)
+	client := NewEtcdConn(etcdServers)
 	defer client.Close()
 
 	if values, err := client.GetKeysByPrefix("/test"); err != nil {
@@ -42,7 +42,7 @@ func TestEtcd_GetKeysByPrefix(t *testing.T) {
 }
 
 func TestEtcd_Del(t *testing.T) {
-	client := NewEtcdConn(etcd_servers)
+	client := NewEtcdConn(etcdServers)
 	defer client.Close()
 
 	if err := client.Del("/test/1"); err != nil {

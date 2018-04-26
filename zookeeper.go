@@ -36,10 +36,10 @@ func NewZKConn(servers []string) *Zookeeper {
 //ZK Create new node
 //flag：0:forever;1:ephemeral
 func (z *Zookeeper) Create(path string, data []byte, flag int32) (err error) {
-	var s string = ""
-	path_arr := strings.Split(path, "/")
-	if len(path_arr) > 1 {
-		for _, v := range path_arr {
+	var s = ""
+	pathArr := strings.Split(path, "/")
+	if len(pathArr) > 1 {
+		for _, v := range pathArr {
 			if v != "" {
 				s = s + "/" + v
 				exist, _ := z.Exist(s)

@@ -3,10 +3,10 @@ package utils
 import "testing"
 
 var (
-	redis_host     = "127.0.0.1"
-	redis_port     = "6379"
-	redis_db       = 1
-	redis_password = ""
+	redisHost     = "127.0.0.1"
+	redisPort     = "6379"
+	redisDb       = 1
+	redisPassword = ""
 )
 
 type Article struct {
@@ -16,7 +16,7 @@ type Article struct {
 }
 
 func TestCacheRedis_Set(t *testing.T) {
-	redis := NewRedis(redis_host, redis_port, redis_db, redis_password)
+	redis := NewRedis(redisHost, redisPort, redisDb, redisPassword)
 	if err := redis.Set("test", "test content", 0); err != nil {
 		t.Error(err)
 	}
@@ -24,7 +24,7 @@ func TestCacheRedis_Set(t *testing.T) {
 }
 
 func TestCacheRedis_Get(t *testing.T) {
-	redis := NewRedis(redis_host, redis_port, redis_db, redis_password)
+	redis := NewRedis(redisHost, redisPort, redisDb, redisPassword)
 	v, err := redis.Get("test")
 	if err != nil {
 		t.Error(err)
@@ -36,7 +36,7 @@ func TestCacheRedis_Get(t *testing.T) {
 
 func TestCacheRedis_HSet(t *testing.T) {
 	art := Article{"Example", "Gary", "Hello World!"}
-	redis := NewRedis(redis_host, redis_port, redis_db, redis_password)
+	redis := NewRedis(redisHost, redisPort, redisDb, redisPassword)
 	if err := redis.HSet("article:1", &art, 0); err != nil {
 		t.Error(err)
 	}
@@ -45,7 +45,7 @@ func TestCacheRedis_HSet(t *testing.T) {
 
 func TestCacheRedis_HGet(t *testing.T) {
 	var art Article
-	redis := NewRedis(redis_host, redis_port, redis_db, redis_password)
+	redis := NewRedis(redisHost, redisPort, redisDb, redisPassword)
 	if err := redis.HGet("article:1", &art); err != nil {
 		t.Error(err)
 	} else {
@@ -55,7 +55,7 @@ func TestCacheRedis_HGet(t *testing.T) {
 }
 
 func TestCacheRedis_IsExist(t *testing.T) {
-	redis := NewRedis(redis_host, redis_port, redis_db, redis_password)
+	redis := NewRedis(redisHost, redisPort, redisDb, redisPassword)
 	_, err := redis.IsExist("test")
 	if err != nil {
 		t.Error(err)
@@ -64,7 +64,7 @@ func TestCacheRedis_IsExist(t *testing.T) {
 }
 
 func TestCacheRedis_Del(t *testing.T) {
-	redis := NewRedis(redis_host, redis_port, redis_db, redis_password)
+	redis := NewRedis(redisHost, redisPort, redisDb, redisPassword)
 	err := redis.Del("test")
 	if err != nil {
 		t.Error(err)

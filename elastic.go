@@ -7,12 +7,12 @@ import (
 )
 
 type ES struct {
-	es_host      string
-	es_index     string
-	es_Type      string
+	esHost      string
+	esIndex     string
+	esType      string
 	logHandle    *log.Logger
-	ES_Client    *elastic.Client
-	bool_query   *elastic.BoolQuery
+	EsClient    *elastic.Client
+	boolQuery   *elastic.BoolQuery
 	aggregations map[string]elastic.Aggregation
 	size         int
 	form         int
@@ -42,10 +42,10 @@ func NewES(host string, logHandle *log.Logger) *ES {
 		panic(err)
 	}
 	return &ES{
-		es_host:      host,
+		esHost:      host,
 		logHandle:    logHandle,
-		ES_Client:    client,
-		bool_query:   elastic.NewBoolQuery(),
+		EsClient:    client,
+		boolQuery:   elastic.NewBoolQuery(),
 		aggregations: make(map[string]elastic.Aggregation),
 		size:         10000,
 		form:         0,
@@ -54,20 +54,20 @@ func NewES(host string, logHandle *log.Logger) *ES {
 }
 
 //Set ES Index
-func (e *ES) Index(es_index string) *ES {
-	e.es_index = es_index
+func (e *ES) Index(esIndex string) *ES {
+	e.esIndex = esIndex
 	return e
 }
 
 //Set ES Type
-func (e *ES) Type(es_type string) *ES {
-	e.es_Type = es_type
+func (e *ES) Type(esType string) *ES {
+	e.esType = esType
 	return e
 }
 
 //ES Where Condition search
 func (e *ES) Where(field string, value interface{}) *ES {
-	e.bool_query = e.bool_query.Must(elastic.NewTermQuery(field, value))
+	e.boolQuery = e.boolQuery.Must(elastic.NewTermQuery(field, value))
 	return e
 }
 
@@ -85,22 +85,22 @@ func (e *ES) Page(page int) *ES {
 
 //ES Range Condition search
 func (e *ES) Range(field string, values map[string]interface{}) *ES {
-	range_query := elastic.NewRangeQuery(field)
+	rangeQuery := elastic.NewRangeQuery(field)
 	for k, v := range values {
 		if k == "gt" {
-			range_query.Gt(v)
+			rangeQuery.Gt(v)
 		}
 		if k == "gte" {
-			range_query.Gte(v)
+			rangeQuery.Gte(v)
 		}
 		if k == "lt" {
-			range_query.Lt(v)
+			rangeQuery.Lt(v)
 		}
 		if k == "lte" {
-			range_query.Lte(v)
+			rangeQuery.Lte(v)
 		}
 	}
-	e.bool_query = e.bool_query.Must(range_query)
+	e.boolQuery = e.boolQuery.Must(rangeQuery)
 	return e
 }
 
@@ -160,12 +160,12 @@ func (e *ES) OrderBy(field string, order string) *ES {
 
 //ES Create Index
 func (e *ES) CreateIndex(index string) (err error) {
-	exists, err := e.ES_Client.IndexExists(index).Do()
+	exists, err := e.EsClient.IndexExists(index).Do()
 	if err != nil {
 		return err
 	}
 	if !exists {
-		createIndex, err := e.ES_Client.CreateIndex(index).Do()
+		createIndex, err := e.EsClient.CreateIndex(index).Do()
 		if err != nil {
 			return err
 		}
@@ -178,12 +178,12 @@ func (e *ES) CreateIndex(index string) (err error) {
 
 //ES Delete Index
 func (e *ES) DeleteIndex(index string) (err error) {
-	exists, err := e.ES_Client.IndexExists(index).Do()
+	exists, err := e.EsClient.IndexExists(index).Do()
 	if err != nil {
 		return err
 	}
 	if exists {
-		_, err = e.ES_Client.DeleteIndex(index).Do()
+		_, err = e.EsClient.DeleteIndex(index).Do()
 		if err != nil {
 			return err
 		}
@@ -198,10 +198,10 @@ func (e *ES) Search() (ESResponse, error) {
 	var resp ESResponse
 
 	// Create service and use query, aggregations, filter
-	search := e.ES_Client.Search().
-		Index(e.es_index).
-		Type(e.es_Type).
-		Query(e.bool_query).
+	search := e.EsClient.Search().
+		Index(e.esIndex).
+		Type(e.esType).
+		Query(e.boolQuery).
 		Size(e.size).
 		From(e.form)
 

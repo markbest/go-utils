@@ -6,11 +6,11 @@ import (
 )
 
 var (
-	mongodb_host     = "127.0.0.1"
-	mongodb_port     = "27017"
-	mongodb_source   = "admin"
-	mongodb_username = ""
-	mongodb_password = ""
+	mongodbHost     = "127.0.0.1"
+	mongodbPort     = "27017"
+	mongodbSource   = "admin"
+	mongodbUsername = ""
+	mongodbPassword = ""
 )
 
 type Book struct {
@@ -22,12 +22,12 @@ type Book struct {
 }
 
 func TestMongodb_Connect(t *testing.T) {
-	m := NewMongodb(mongodb_host, mongodb_port, mongodb_source, mongodb_username, mongodb_password)
+	m := NewMongodb(mongodbHost, mongodbPort, mongodbSource, mongodbUsername, mongodbPassword)
 	defer m.Close()
 }
 
 func TestMongodb_One(t *testing.T) {
-	m := NewMongodb(mongodb_host, mongodb_port, mongodb_source, mongodb_username, mongodb_password)
+	m := NewMongodb(mongodbHost, mongodbPort, mongodbSource, mongodbUsername, mongodbPassword)
 	defer m.Close()
 
 	rs := &Book{}
@@ -40,7 +40,7 @@ func TestMongodb_One(t *testing.T) {
 }
 
 func TestMongodb_All(t *testing.T) {
-	m := NewMongodb(mongodb_host, mongodb_port, mongodb_source, mongodb_username, mongodb_password)
+	m := NewMongodb(mongodbHost, mongodbPort, mongodbSource, mongodbUsername, mongodbPassword)
 	defer m.Close()
 
 	rs := &[]Book{}
@@ -53,7 +53,7 @@ func TestMongodb_All(t *testing.T) {
 }
 
 func TestMongodb_AllCollections(t *testing.T) {
-	m := NewMongodb(mongodb_host, mongodb_port, mongodb_source, mongodb_username, mongodb_password)
+	m := NewMongodb(mongodbHost, mongodbPort, mongodbSource, mongodbUsername, mongodbPassword)
 	defer m.Close()
 
 	rs := m.DB("crawler").AllCollections()
@@ -61,7 +61,7 @@ func TestMongodb_AllCollections(t *testing.T) {
 }
 
 func TestMongodb_Insert(t *testing.T) {
-	m := NewMongodb(mongodb_host, mongodb_port, mongodb_source, mongodb_username, mongodb_password)
+	m := NewMongodb(mongodbHost, mongodbPort, mongodbSource, mongodbUsername, mongodbPassword)
 	defer m.Close()
 
 	rs := &Book{"title", "img", "author", "sell", "url"}
@@ -72,7 +72,7 @@ func TestMongodb_Insert(t *testing.T) {
 }
 
 func TestMongodb_Update(t *testing.T) {
-	m := NewMongodb(mongodb_host, mongodb_port, mongodb_source, mongodb_username, mongodb_password)
+	m := NewMongodb(mongodbHost, mongodbPort, mongodbSource, mongodbUsername, mongodbPassword)
 	defer m.Close()
 
 	err := m.DB("crawler").Collection("book").Update(bson.M{"title": "title"}, bson.M{"title": "title1"})
@@ -82,7 +82,7 @@ func TestMongodb_Update(t *testing.T) {
 }
 
 func TestMongodb_Remove(t *testing.T) {
-	m := NewMongodb(mongodb_host, mongodb_port, mongodb_source, mongodb_username, mongodb_password)
+	m := NewMongodb(mongodbHost, mongodbPort, mongodbSource, mongodbUsername, mongodbPassword)
 	defer m.Close()
 
 	err := m.DB("crawler").Collection("book").Remove(bson.M{"title": "title"})
