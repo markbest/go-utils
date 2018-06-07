@@ -14,7 +14,5 @@ go test -v zookeeper_test.go zookeeper.go
 go test -v etcd_test.go etcd.go  
 - ssh  
 go test -v ssh_test.go ssh.go
-- database  
-go test -v database_test.go database.go
 - aes  
 go test -v aes_test.go aes.go

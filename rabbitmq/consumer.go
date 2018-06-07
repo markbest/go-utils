@@ -24,12 +24,12 @@ func NewConsumer(amqpUrl, exchange, exchangeType, queueName, key, tag string) (c
 
 	c.conn, err = amqp.Dial(amqpUrl)
 	if err != nil {
-		return nil, fmt.Errorf("Dial: %s", err)
+		return nil, fmt.Errorf("dial: %s", err)
 	}
 
 	c.channel, err = c.conn.Channel()
 	if err != nil {
-		return nil, fmt.Errorf("Channel: %s", err)
+		return nil, fmt.Errorf("channel: %s", err)
 	}
 
 	if err = c.channel.ExchangeDeclare(
@@ -41,7 +41,7 @@ func NewConsumer(amqpUrl, exchange, exchangeType, queueName, key, tag string) (c
 		false,        // noWait
 		nil,          // arguments
 	); err != nil {
-		return nil, fmt.Errorf("Exchange Declare: %s", err)
+		return nil, fmt.Errorf("exchange Declare: %s", err)
 	}
 
 	c.queue, err = c.channel.QueueDeclare(
@@ -53,7 +53,7 @@ func NewConsumer(amqpUrl, exchange, exchangeType, queueName, key, tag string) (c
 		nil,       // arguments
 	)
 	if err != nil {
-		return nil, fmt.Errorf("Queue Declare: %s", err)
+		return nil, fmt.Errorf("queue Declare: %s", err)
 	}
 
 	if err = c.channel.QueueBind(
@@ -63,7 +63,7 @@ func NewConsumer(amqpUrl, exchange, exchangeType, queueName, key, tag string) (c
 		false,        // noWait
 		nil,          // arguments
 	); err != nil {
-		return nil, fmt.Errorf("Queue Bind: %s", err)
+		return nil, fmt.Errorf("queue Bind: %s", err)
 	}
 	return c, nil
 }
@@ -71,7 +71,7 @@ func NewConsumer(amqpUrl, exchange, exchangeType, queueName, key, tag string) (c
 // shut down consumer
 func (c *Consumer) Shutdown() error {
 	if err := c.channel.Cancel(c.tag, true); err != nil {
-		return fmt.Errorf("Consumer cancel failed: %s", err)
+		return fmt.Errorf("consumer cancel failed: %s", err)
 	}
 
 	if err := c.conn.Close(); err != nil {

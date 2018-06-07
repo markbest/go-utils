@@ -27,13 +27,13 @@ func NewProducer(amqpUrl, exchange, exchangeType, routingKey string) Producer {
 func (p *Producer) Publish(body string) error {
 	connection, err := amqp.Dial(p.amqpUrl)
 	if err != nil {
-		return fmt.Errorf("Dial: %s", err)
+		return fmt.Errorf("dial: %s", err)
 	}
 	defer connection.Close()
 
 	channel, err := connection.Channel()
 	if err != nil {
-		return fmt.Errorf("Channel: %s", err)
+		return fmt.Errorf("channel: %s", err)
 	}
 	defer channel.Close()
 
@@ -46,7 +46,7 @@ func (p *Producer) Publish(body string) error {
 		false,          // noWait
 		nil,            // arguments
 	); err != nil {
-		return fmt.Errorf("Exchange Declare: %s", err)
+		return fmt.Errorf("exchange Declare: %s", err)
 	}
 
 	if err := channel.Publish(
@@ -63,7 +63,7 @@ func (p *Producer) Publish(body string) error {
 			Priority:        0,              // 0-9
 		},
 	); err != nil {
-		return fmt.Errorf("Exchange Publish: %s", err)
+		return fmt.Errorf("exchange Publish: %s", err)
 	}
 	return nil
 }
